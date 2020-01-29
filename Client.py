@@ -13,6 +13,9 @@ class Clients:
         self.desire_threshold_list = [desire_threshold] * n_client
         self.preference_matrix = np.zeros((n_client, self.n_commodity))
         self.desire_matrix = np.zeros((n_client, self.n_commodity))
+        #self.recomendation_length = recomendation_length
+        self.reward_history = []
+        self.regret_history = []
         
         self.generate_client_distribution()
         
@@ -46,5 +49,23 @@ class Clients:
         client_desire = self.desire_matrix[client]
         return client_desire[client_desire>self.desire_threshold_list[client]]
     
-    def return_command(self, client, recommandation):
+    def return_command(self, client, recommandation_list):
+        client_waiting_list = self.get_waiting_list(client)
+        return np.array([x for x in recommandation_list if x in client_waiting_list])
+
+    def get_reward(self, client, recommandation_list):
+        articles_bought = self.return_command(client, recommandation)
+        self.reward_history.append(len(articles_bought))
+        return len(articles_bought)
+
+    def get_regret(self, client, recommandation_list):
+        #articles_bought = self.return_command(client, recommandation)
+        articles_wanted_to_buy = self.get_waiting_list(client)
+        regret = np.min(len(articles_wanted_to_buy), len(recommandation_list)) - self.get_reward(client, recommandation_list)
+        self.regret_history.append(regret)
+        return regret
+
+    def step(self):
         pass
+        
+
