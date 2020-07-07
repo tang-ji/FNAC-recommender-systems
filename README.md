@@ -1,2 +1,2 @@
-# FNAC_recommender_systems
+# FNAC-recommender-systems
 E-commerce Project (IA316-2020)
