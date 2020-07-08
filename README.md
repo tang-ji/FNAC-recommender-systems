@@ -1,7 +1,7 @@
 # FNAC-recommender-systems
 E-commerce Project (IA316-2020)
 
-**Environment
+**Environment**
 
 The environment describes the clients’ properties: Clients have different preferences on different categories
 
